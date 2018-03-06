@@ -1,35 +1,65 @@
-module.exports = function longestConsecutiveLength(array) {
+module.exports = function longestConsecutiveLength(num) {
 
-    let maxLength = 1; ///  максимальная длина последовательнсоти
-    let counnt = 1;    /// длина текущей последовательности
+    // let maxLength = 0; ///  максимальная длина последовательнсоти
+    // let counnt = 1;    /// длина текущей последовательности
+    //
+    //
+    // function sorter(a, b) {
+    //      return b - a;
+    // }
+    //
+    // array.sort(sorter);
+    //
+    // if (array.length === 0) return 0;
+    //
+    //
+    // for (let i = 1; i <= array.length; i++) if (array[i] - array[i - 1] === 1) {
+    //     counnt += 1;
+    // } else {
+    //
+    //     if (counnt > maxLength) {maxLength = counnt;    console.log(counnt);console.log (array[i])}
+    //
+    //         counnt = 1;
+    // }
+    // console.log(counnt)
+    // console.log(maxLength)
+    //     return maxLength;
 
 
-    function sorter(a, b) {
-        return a - b;
+    if (num.length == 0) {
+        return 0;
     }
 
-    array.sort(sorter);
 
-    if (array.length == 0) return 0;
+    let maxLength = 1;
+    let myset = new Set()
+
+    for (let i = 0; i < num.length; i++)
+        myset.add(num[i]);
 
 
-    for (let i = 1; i < array.length; i++) {
+    for (let i = 0; i < num.length; i++) {
 
-        if (array[i] - array[i - 1] == 1) {
+        let leftElement = num[i] - 1;
+        let rightElement = num[i] + 1;
+        let count = 1;
+        let skip = 0;
 
-            counnt = counnt + 1
+        if (myset.has(leftElement)) {
+            skip = 1
         }
 
-        else {
-
-            if (counnt > maxLength) {
-                maxLength = counnt
+        if (skip != 1) {
+            while (myset.has(rightElement)) {
+                count++;
+                rightElement++;
             }
-            counnt = 1;
         }
 
+        maxLength = Math.max(count, maxLength);
     }
-        return maxLength;
+
+    return maxLength;
 
 
 }
